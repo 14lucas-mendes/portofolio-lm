@@ -1,0 +1,134 @@
+/* ---------- Keyframes ---------- */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+@keyframes glowDrift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(40px, 30px) scale(1.15); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 100; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes fillProgress {
+  from { width: 0; }
+}
+
+@keyframes typeIn {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+@keyframes caretBlink {
+  0%, 100% { border-color: transparent; }
+  50%      { border-color: var(--accent); }
+}
+
+/* ---------- Reveal classes (IntersectionObserver toggles `.visible`) ---------- */
+
+.fade-in,
+.reveal-up,
+.reveal-left,
+.reveal-right {
+  opacity: 0;
+}
+
+.fade-in { transform: translateY(20px); }
+.reveal-up { transform: translateY(28px); }
+.reveal-left { transform: translateX(-28px); }
+.reveal-right { transform: translateX(28px); }
+
+.fade-in.visible,
+.reveal-up.visible,
+.reveal-left.visible,
+.reveal-right.visible {
+  opacity: 1;
+  transform: translate(0, 0);
+  transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- Skill / chart observers (existing) ---------- */
+
+.skill-circle-progress {
+  transition: stroke-dashoffset 1s ease;
+}
+
+.skill-circle-progress.animated {
+  animation: drawLine 1s ease forwards;
+}
+
+.progress-bar-fill {
+  transition: width 1s ease;
+}
+
+.github-chart-bar {
+  transition: height 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.github-chart-bar.animated {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* ---------- Typewriter cursor for .typewriter ---------- */
+
+.typewriter {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid var(--accent);
+  animation: typeIn 1.8s steps(28, end) forwards,
+             caretBlink 0.9s step-end infinite;
+  width: 0;
+}
+
+/* Accessibility: respect reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .fade-in, .reveal-up, .reveal-left, .reveal-right {
+    opacity: 1;
+    transform: none;
+  }
+}
